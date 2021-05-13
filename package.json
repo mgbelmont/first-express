@@ -1,0 +1,17 @@
+{
+  "name": "first-express",
+  "version": "1.0.0",
+  "description": "server express\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[Cfirst server express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "@mgbelmont",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
