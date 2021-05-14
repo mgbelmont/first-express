@@ -7,7 +7,7 @@ const fs = require('fs')
 
 //middleware
 server.use(express.json())
-
+/*
 server.get('/hola', (request, response)=>{
     response.write('GET /hola')
     response.end()
@@ -19,7 +19,8 @@ server.post('/hola', (request, response)=>{
     response.end()
 
 })
-
+*/
+/*
 server.get('/koders', (request, response)=>{
     response.status(200)
     //response.json({message :  'Aqui la lista de koders'})
@@ -39,6 +40,39 @@ server.get('/koders', (request, response)=>{
        
     })
 
+})*/
+
+const getKodersFile= ()=>{
+    const content = fs.readFileSync('koders.json', 'utf-8')
+    const json = JSON.parse(content)
+    return json;
+}
+
+server.get('/koders', async (request, response)=>{
+    const genderFilter = request.query.gender
+    const countFilter = parseInt(request.query.count)
+    const nameFilter =  request.query.name
+    const jsonParsed = getKodersFile()
+
+    let  kodersData = null
+    if(genderFilter){
+
+        kodersData =  jsonParsed.koders.filter(koder => koder.gender === genderFilter)
+        
+    }
+    
+    if(nameFilter){
+         const dataToFilter = kodersData || jsonParsed.koders
+         kodersData = dataToFilter.filter(koder => koder.name === nameFilter)
+    }
+
+    if(countFilter){
+        const dataToFilter = kodersData || jsonParsed.koders
+        kodersData = dataToFilter.splice(0,countFilter)
+    }
+
+    jsonParsed.koders = kodersData || jsonParsed.koders
+    response.json(jsonParsed.koders)
 })
 
 server.post('/koders', (request, response)=>{
@@ -113,7 +147,7 @@ server.delete('/koders/:id', (request, response) =>{
 server.get('/koders/:id', (request, response) =>{
     
     const id = parseInt(request.params.id)
-    
+  
     const content = fs.readFileSync('koders.json', 'utf-8')
     const json = JSON.parse(content)
     
